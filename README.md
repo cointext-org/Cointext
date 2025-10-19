@@ -302,25 +302,6 @@ curl -X GET "http://localhost:3000/api/ai/ask?query=analyze%20ethereum%20market"
 
 ---
 
-## 📞 **Contact & Links**
-
-**🌐 Project Links**
-- **Live Demo**: [cointext.xyz](https://cointext.xyz)
-- **Contract**: `0xD0924FA4C6BA194294a414d0fB826739deD98b24`
-- **Virtuals.io**: [app.virtuals.io/virtuals/35045](https://app.virtuals.io/virtuals/35045)
-
-**👥 Team**
-- **Twitter**: [@AI_BRK](https://x.com/AI_BRK)
-- **ENS**: `cointext-fund.base.eth`
-- **Email**: `team@cointext.xyz`
-
-**📚 Documentation**
-- [API Documentation](./docs/api.md)
-- [Architecture Guide](./docs/architecture.md)
-- [Deployment Guide](./DEPLOYMENT_GUIDE.md)
-
----
-
 ## 🛠️ **Development Commands**
 
 ### **Database Management**
