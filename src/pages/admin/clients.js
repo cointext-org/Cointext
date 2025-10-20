@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import AdminLayout from '../../components/admin/Layout';
 import adminApi, { AdminApiError } from '../../lib/adminApi';
@@ -299,11 +299,7 @@ function ApiToolsModal({ client, onClose }) {
   const [tools, setTools] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchClientApiTools();
-  }, [client.id]);
-
-  const fetchClientApiTools = async () => {
+  const fetchClientApiTools = useCallback(async () => {
     try {
       const response = await fetch(`/api/admin/clients/${client.id}/api-tools`);
       const data = await response.json();
@@ -314,7 +310,11 @@ function ApiToolsModal({ client, onClose }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [client.id]);
+
+  useEffect(() => {
+    fetchClientApiTools();
+  }, [fetchClientApiTools]);
 
   const handleToggleAssignment = async (tool) => {
     try {

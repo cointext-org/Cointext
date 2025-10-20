@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "create": "npx prisma migrate dev --create-only --name",
     "migrate": "npx prisma migrate deploy && npx prisma generate",
@@ -34,6 +34,7 @@
     "langchain": "^0.3.34",
     "mammoth": "^1.10.0",
     "multer": "^2.0.2",
+    "nes.css": "^2.3.0",
     "next": "15.4.6",
     "node-fetch": "^3.3.2",
     "openai": "^5.16.0",

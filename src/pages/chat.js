@@ -304,22 +304,22 @@ export default function ChatPage() {
     const isExpanded = expandedSteps[key];
     
     return (
-      <div className="mt-2 border border-gray-700 bg-gray-800/20 rounded-lg">
+      <div className="nes-container is-dark mt-2">
         <button
           onClick={() => toggleStepExpansion(messageId, step.id)}
-          className="w-full px-3 py-2 text-left text-sm bg-gray-800/30 hover:bg-gray-700/30 text-gray-300 flex items-center justify-between"
+          className="nes-btn is-normal w-full pixel-text-sm"
         >
-          <span className="font-medium">View Details</span>
-          {isExpanded ? <ChevronUpIcon className="w-4 h-4" /> : <ChevronDownIcon className="w-4 h-4" />}
+          <span>VIEW DETAILS</span>
+          {isExpanded ? <ChevronUpIcon className="w-4 h-4 ml-2" /> : <ChevronDownIcon className="w-4 h-4 ml-2" />}
         </button>
         
         {isExpanded && (
-          <div className="p-3 border-t border-gray-700 text-xs space-y-2">
+          <div className="p-3 space-y-2">
             {/* Step Parameters */}
             {step.parameters && Object.keys(step.parameters).length > 0 && (
               <div>
-                <div className="font-medium text-gray-300 mb-1">Parameters:</div>
-                <pre className="bg-gray-800/40 p-2 rounded text-xs overflow-x-auto text-gray-300">
+                <div className="pixel-text-sm text-yellow-400 mb-1">PARAMETERS:</div>
+                <pre className="nes-container is-dark pixel-text-sm text-white overflow-x-auto">
                   {JSON.stringify(step.parameters, null, 2)}
                 </pre>
               </div>
@@ -328,10 +328,10 @@ export default function ChatPage() {
             {/* Tools Used */}
             {step.tools && step.tools.length > 0 && (
               <div>
-                <div className="font-medium text-gray-300 mb-1">Tools Used:</div>
+                <div className="pixel-text-sm text-yellow-400 mb-1">TOOLS USED:</div>
                 <div className="flex flex-wrap gap-1">
                   {step.tools.map((tool, idx) => (
-                    <span key={idx} className="px-2 py-1 bg-blue-900/40 text-blue-300 border border-blue-700 rounded text-xs">
+                    <span key={idx} className="nes-badge is-primary">
                       {tool}
                     </span>
                   ))}
@@ -342,14 +342,14 @@ export default function ChatPage() {
             {/* Step Result */}
             {step.result && (
               <div>
-                <div className="font-medium text-gray-300 mb-1">Result:</div>
+                <div className="pixel-text-sm text-yellow-400 mb-1">RESULT:</div>
                 {step.error ? (
-                  <div className="bg-red-900/20 border border-red-700 p-2 rounded text-red-300">
-                    <div className="font-medium">Error:</div>
-                    <div>{step.error}</div>
+                  <div className="nes-container is-error">
+                    <div className="pixel-text-sm text-white">ERROR:</div>
+                    <div className="pixel-text-sm text-red-300">{step.error}</div>
                   </div>
                 ) : (
-                  <pre className="bg-gray-800/40 p-2 rounded text-xs overflow-x-auto max-h-40 text-gray-300">
+                  <pre className="nes-container is-dark pixel-text-sm text-white overflow-x-auto max-h-40">
                     {JSON.stringify(step.result, null, 2)}
                   </pre>
                 )}
@@ -357,10 +357,10 @@ export default function ChatPage() {
             )}
             
             {/* Timing */}
-            <div className="flex items-center justify-between text-gray-400">
-              <span>Execution Time: {step.latencyMs ? `${step.latencyMs}ms` : formatDuration(step.startTime, step.endTime) || 'N/A'}</span>
+            <div className="flex items-center justify-between">
+              <span className="pixel-text-sm text-gray-400">TIME: {step.latencyMs ? `${step.latencyMs}ms` : formatDuration(step.startTime, step.endTime) || 'N/A'}</span>
               {step.startTime && (
-                <span>Started: {new Date(step.startTime).toLocaleTimeString()}</span>
+                <span className="pixel-text-sm text-gray-400">START: {new Date(step.startTime).toLocaleTimeString()}</span>
               )}
             </div>
           </div>
@@ -373,8 +373,8 @@ export default function ChatPage() {
     if (!steps || steps.length === 0) return null;
     
     return (
-      <div className="mb-4">
-        <div className="text-sm font-medium text-gray-300 mb-3">Execution Timeline:</div>
+      <div className="nes-container is-warning with-title mb-4">
+        <p className="title">TIMELINE</p>
         <div className="relative">
           {/* Timeline line */}
           <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-600"></div>
@@ -382,11 +382,11 @@ export default function ChatPage() {
           {steps.map((step, index) => (
             <div key={index} className="relative flex items-start mb-4 last:mb-0">
               {/* Timeline dot */}
-              <div className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                step.status === 'completed' ? 'bg-green-500 text-white' :
-                step.status === 'error' ? 'bg-red-500 text-white' :
-                step.status === 'running' ? 'bg-blue-500 text-white animate-pulse' :
-                'bg-gray-600 text-gray-300'
+              <div className={`relative z-10 w-8 h-8 flex items-center justify-center pixel-text-sm ${
+                step.status === 'completed' ? 'nes-badge is-success' :
+                step.status === 'error' ? 'nes-badge is-error' :
+                step.status === 'running' ? 'nes-badge is-primary animate-pulse' :
+                'nes-badge'
               }`}>
                 {index + 1}
               </div>
@@ -394,22 +394,22 @@ export default function ChatPage() {
               {/* Step content */}
               <div className="ml-4 flex-1">
                 <div className="flex items-center justify-between">
-                  <div className={`font-medium text-sm ${
+                  <div className={`pixel-text-sm ${
                     step.status === 'completed' ? 'text-green-400' :
                     step.status === 'error' ? 'text-red-400' :
                     step.status === 'running' ? 'text-blue-400' :
-                    'text-gray-400'
+                    'text-white'
                   }`}>
                     {getStepName(step.type, step.name)}
                   </div>
-                  <div className="text-xs text-gray-400">
+                  <div className="pixel-text-sm text-gray-400">
                     {step.latencyMs ? `${step.latencyMs}ms` : 
-                     step.startTime ? formatDuration(step.startTime, step.endTime) || 'In Progress...' : ''}
+                     step.startTime ? formatDuration(step.startTime, step.endTime) || 'IN PROGRESS...' : ''}
                   </div>
                 </div>
                 
                 {step.error && (
-                  <div className="mt-1 text-xs text-red-400">
+                  <div className="mt-1 pixel-text-sm text-red-400">
                     {step.error}
                   </div>
                 )}
@@ -417,7 +417,7 @@ export default function ChatPage() {
                 {step.tools && step.tools.length > 0 && (
                   <div className="mt-1 flex flex-wrap gap-1">
                     {step.tools.map((tool, idx) => (
-                      <span key={idx} className="px-1.5 py-0.5 bg-gray-700 text-gray-300 rounded text-xs">
+                      <span key={idx} className="nes-badge is-normal">
                         {tool}
                       </span>
                     ))}
@@ -474,15 +474,14 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-gray-500 flex flex-col">
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col pixel-text">
       {/* Header */}
-      <div className="bg-transparent border-b border-gray-700 px-6 py-4">
+      <div className="nes-container is-dark with-title mb-4">
+        <p className="title">COINTEXT</p>
         <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <div className="text-gray-200">
-            <div  style={{
-                fontFamily: 'Times New Roman',
-              }}  className="text-4xl">Cointext</div>
-            <div className="text-xs text-gray-500 mt-1">Context for every coin</div>
+          <div className="text-white">
+            <div className="pixel-text-lg">COINTEXT</div>
+            <div className="pixel-text-sm text-gray-300 mt-2">Context for every coin</div>
           </div>
           <div className="flex items-center space-x-4">
             <input
@@ -493,14 +492,14 @@ export default function ChatPage() {
               style={{
                 display: "none"
               }}
-              className="px-3 py-1 w-0 text-sm border border-gray-600 bg-transparent text-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="nes-input is-dark pixel-text-sm"
             />
             {isLoading && (
               <button
                 onClick={cancelRequest}
-                className="px-3 py-1 text-sm bg-red-900 text-red-300 rounded-md hover:bg-red-800"
+                className="nes-btn is-error pixel-text-sm"
               >
-                Cancel
+                CANCEL
               </button>
             )}
           </div>
@@ -511,9 +510,10 @@ export default function ChatPage() {
       <div className="flex-1 overflow-y-auto px-6 py-4">
         <div className="max-w-4xl mx-auto space-y-6">
           {messages.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-gray-400 mb-4">The knowledge base for every chain, every platform.</div>
-              <div className="text-sm text-gray-500">
+            <div className="nes-container is-dark with-title text-center">
+              <p className="title">WELCOME</p>
+              <div className="pixel-text text-white mb-4">The knowledge base for every chain, every platform.</div>
+              <div className="pixel-text-sm text-gray-300">
                 Real-time intelligence with institutional-grade precision.
               </div>
             </div>
@@ -521,39 +521,40 @@ export default function ChatPage() {
 
           {messages.map((message) => (
             <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-3xl ${message.type === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-800 bg-opacity-50 border border-gray-700'} rounded-lg shadow-sm p-4`}>
+              <div className={`max-w-3xl ${message.type === 'user' ? 'nes-container is-primary' : 'nes-container is-dark'}`}>
                 {message.type === 'user' ? (
                   <div>
-                    <div className="font-medium mb-1">You</div>
-                    <div>{message.content}</div>
-                    <div className="text-xs opacity-75 mt-2">{formatTimestamp(message.timestamp)}</div>
+                    <div className="pixel-text-sm text-white mb-2">YOU</div>
+                    <div className="pixel-text text-white">{message.content}</div>
+                    <div className="pixel-text-sm opacity-75 mt-2">{formatTimestamp(message.timestamp)}</div>
                   </div>
                 ) : (
                   <div>
-                    <div className="font-medium mb-2 text-gray-300">Cointext</div>
+                    <div className="pixel-text-sm text-white mb-2">COINTEXT</div>
                     
                     {/* Workflow Plan */}
                     {message.workflow && (
-                      <div className="mb-4 p-4 bg-gradient-to-r from-blue-900 from-blue-900/20 to-indigo-900/20 border border-blue-700 rounded-lg">
+                      <div className="nes-container is-primary with-title mb-4">
+                        <p className="title">THINKING</p>
                         <div className="flex items-center mb-2">
                           <div className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></div>
-                          <div className="text-sm font-semibold text-blue-300">
-                            🧠 Thinking Process: {message.workflow.intent === 'DIRECT_ANSWER' ? 'Direct Answer' : 'Tool Enhanced'}
+                          <div className="pixel-text-sm text-white">
+                            Process: {message.workflow.intent === 'DIRECT_ANSWER' ? 'DIRECT ANSWER' : 'TOOL ENHANCED'}
                           </div>
                         </div>
-                        <div className="text-xs text-blue-300 mb-2">
-                          <span className="font-medium">Confidence:</span> {(message.workflow.confidence * 100).toFixed(1)}%
+                        <div className="pixel-text-sm text-white mb-2">
+                          <span className="text-yellow-400">CONFIDENCE:</span> {(message.workflow.confidence * 100).toFixed(1)}%
                         </div>
-                        <div className="text-xs text-blue-200 bg-blue-900/30 p-2 rounded">
-                          <span className="font-medium">Reasoning:</span> {message.workflow.reasoning}
+                        <div className="nes-container is-dark pixel-text-sm text-white">
+                          <span className="text-yellow-400">REASONING:</span> {message.workflow.reasoning}
                         </div>
                         {message.workflow.workflow && message.workflow.workflow.steps && (
                           <div className="mt-3">
-                            <div className="text-xs font-medium text-blue-300 mb-1">Planned Execution Steps:</div>
+                            <div className="pixel-text-sm text-yellow-400 mb-2">PLANNED STEPS:</div>
                             <div className="space-y-1">
                               {message.workflow.workflow.steps.map((step, idx) => (
-                                <div key={idx} className="text-xs text-blue-300 flex items-center">
-                                  <span className="w-4 h-4 bg-blue-700 rounded-full flex items-center justify-center text-xs font-bold mr-2 text-blue-200">
+                                <div key={idx} className="pixel-text-sm text-white flex items-center">
+                                  <span className="nes-badge is-primary mr-2">
                                     {idx + 1}
                                   </span>
                                   {step.name || getStepName(step.type)}
@@ -572,21 +573,17 @@ export default function ChatPage() {
                         {(() => {
                           const progress = getWorkflowProgress(message.steps);
                           return (
-                            <div className="mb-4 p-3 bg-gray-800/30 border border-gray-700 rounded-lg">
+                            <div className="nes-container is-success with-title mb-4">
+                              <p className="title">PROGRESS</p>
                               <div className="flex items-center justify-between mb-2">
-                                <div className="text-sm font-medium text-gray-300">
-                                  Execution Progress: {progress.completed}/{progress.total} steps
+                                <div className="pixel-text-sm text-white">
+                                  EXECUTION: {progress.completed}/{progress.total} STEPS
                                 </div>
-                                <div className="text-xs text-gray-400">
-                                  {progress.percentage.toFixed(0)}% completed
+                                <div className="pixel-text-sm text-green-400">
+                                  {progress.percentage.toFixed(0)}% DONE
                                 </div>
                               </div>
-                              <div className="w-full bg-gray-700 rounded-full h-2">
-                                <div 
-                                  className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-                                  style={{ width: `${progress.percentage}%` }}
-                                ></div>
-                              </div>
+                              <progress className="nes-progress is-success" value={progress.percentage} max="100"></progress>
                             </div>
                           );
                         })()}
@@ -595,42 +592,42 @@ export default function ChatPage() {
                         {renderWorkflowTimeline(message.steps)}
                         
                         {/* Detailed Steps */}
-                        <div className="text-sm font-medium text-gray-300 mb-3">Detailed Execution Steps:</div>
+                        <div className="pixel-text-sm text-yellow-400 mb-3">DETAILED EXECUTION STEPS:</div>
                         <div className="space-y-3">
                           {message.steps.map((step, index) => (
-                            <div key={index} className="border border-gray-700 bg-gray-800/20 rounded-lg p-3">
+                            <div key={index} className="nes-container is-dark">
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center text-sm">
+                                <div className="flex items-center">
                                   {getStepIcon(step.type, step.status)}
-                                  <span className={`font-medium ${
+                                  <span className={`pixel-text-sm ${
                                     step.status === 'completed' ? 'text-green-400' : 
                                     step.status === 'error' ? 'text-red-400' :
-                                    step.status === 'running' ? 'text-blue-400' : 'text-gray-400'
+                                    step.status === 'running' ? 'text-blue-400' : 'text-white'
                                   }`}>
                                     {getStepName(step.type, step.name)}
                                   </span>
                                   {step.status === 'running' && (
-                                    <span className="ml-2 text-xs text-blue-400 animate-pulse">Executing...</span>
+                                    <span className="ml-2 pixel-text-sm text-blue-400 animate-pulse">EXECUTING...</span>
                                   )}
                                 </div>
-                                <div className="flex items-center space-x-2 text-xs text-gray-400">
+                                <div className="flex items-center space-x-2">
                                   {step.latencyMs && (
-                                    <span>{step.latencyMs}ms</span>
+                                    <span className="pixel-text-sm text-gray-400">{step.latencyMs}ms</span>
                                   )}
                                   {step.status === 'completed' && (
-                                    <span className="text-green-400">✓</span>
+                                    <span className="nes-badge is-success">OK</span>
                                   )}
                                   {step.status === 'error' && (
-                                    <span className="text-red-400">✗</span>
+                                    <span className="nes-badge is-error">ERR</span>
                                   )}
                                 </div>
                               </div>
                               
                               {/* Error Display */}
                               {step.error && (
-                                <div className="mt-2 p-2 bg-red-900/20 border border-red-700 rounded text-sm text-red-300">
-                                  <div className="font-medium">Execution Failed:</div>
-                                  <div className="text-xs mt-1 text-red-400">{step.error}</div>
+                                <div className="nes-container is-error mt-2">
+                                  <div className="pixel-text-sm text-white">EXECUTION FAILED:</div>
+                                  <div className="pixel-text-sm mt-1 text-red-300">{step.error}</div>
                                 </div>
                               )}
                               
@@ -643,18 +640,19 @@ export default function ChatPage() {
                     )}
 
                     {/* Answer Content */}
-                    <div className="text-gray-300">
+                    <div className="text-white">
                       {message.error ? (
-                        <div className="bg-red-900/20 border border-red-700 p-3 rounded-lg">
-                          <div className="flex items-center text-red-300 mb-2">
+                        <div className="nes-container is-error with-title">
+                          <p className="title">ERROR</p>
+                          <div className="flex items-center mb-2">
                             <ExclamationTriangleIcon className="w-5 h-5 mr-2" />
-                            <span className="font-medium">Processing Failed</span>
+                            <span className="pixel-text-sm text-white">PROCESSING FAILED</span>
                           </div>
-                          <div className="text-red-400">{message.content}</div>
+                          <div className="pixel-text text-white">{message.content}</div>
                           {message.errorDetails && (
                             <details className="mt-2">
-                              <summary className="text-sm text-red-400 cursor-pointer">View Detailed Error Information</summary>
-                              <pre className="mt-1 text-xs bg-red-900/30 p-2 rounded overflow-x-auto text-red-300">
+                              <summary className="pixel-text-sm text-red-300 cursor-pointer">VIEW DETAILED ERROR INFO</summary>
+                              <pre className="mt-1 nes-container is-dark pixel-text-sm text-white overflow-x-auto">
                                 {message.errorDetails}
                               </pre>
                             </details>
@@ -663,16 +661,20 @@ export default function ChatPage() {
                       ) : (
                         <div>
                           {message.content ? (
-                            <div className="markdown-content">
-                              {renderMarkdownContent(message.content)}
-                              {message.isStreaming && (
-                                <span className="inline-block w-2 h-5 bg-blue-400 ml-1 animate-pulse" />
-                              )}
+                            <div className="nes-container is-dark">
+                              <div className="pixel-text text-white">
+                                {renderMarkdownContent(message.content)}
+                                {message.isStreaming && (
+                                  <span className="inline-block w-2 h-5 bg-blue-400 ml-1 animate-pulse" />
+                                )}
+                              </div>
                             </div>
                           ) : message.isStreaming ? (
-                            <div className="flex items-center text-blue-400">
-                              <div className="w-1 h-4 bg-blue-400 mr-2 animate-pulse"></div>
-                              Generating answer...
+                            <div className="nes-container is-primary">
+                              <div className="flex items-center text-white">
+                                <div className="w-1 h-4 bg-white mr-2 animate-pulse"></div>
+                                <span className="pixel-text-sm">GENERATING ANSWER...</span>
+                              </div>
                             </div>
                           ) : null}
                         </div>
@@ -681,10 +683,10 @@ export default function ChatPage() {
 
                     {/* Citations */}
                     {message.citations && message.citations.length > 0 && (
-                      <div className="mt-3 p-2 bg-gray-800/30 border border-gray-700 rounded text-xs">
-                        <div className="font-medium text-gray-300 mb-1">References:</div>
+                      <div className="nes-container is-warning with-title mt-3">
+                        <p className="title">REFERENCES</p>
                         {message.citations.map((citation, index) => (
-                          <div key={index} className="text-gray-400">
+                          <div key={index} className="pixel-text-sm text-white">
                             • {citation.filename || citation.source}
                           </div>
                         ))}
@@ -692,10 +694,10 @@ export default function ChatPage() {
                     )}
 
                     {/* Metadata */}
-                    <div className="flex items-center justify-between mt-3 text-xs text-gray-400">
-                      <div>{formatTimestamp(message.timestamp)}</div>
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="pixel-text-sm text-gray-400">{formatTimestamp(message.timestamp)}</div>
                       {message.latencyMs && (
-                        <div>Response Time: {message.latencyMs}ms</div>
+                        <div className="pixel-text-sm text-green-400">RESPONSE: {message.latencyMs}ms</div>
                       )}
                     </div>
                   </div>
@@ -708,38 +710,39 @@ export default function ChatPage() {
       </div>
 
       {/* Input */}
-      <div className="bg-transparent border-t border-gray-700 px-6 py-4">
+      <div className="nes-container is-dark with-title px-6 py-4">
+        <p className="title">INPUT</p>
         <div className="max-w-4xl mx-auto">
           <form onSubmit={handleSubmit} className="flex space-x-4">
             <input
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask Cointext..."
+              placeholder="ASK COINTEXT..."
               disabled={isLoading || !apiKey}
-              className="flex-1 px-4 py-2 border border-gray-600 bg-gray-800/30 text-gray-300 placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-800/10"
+              className="nes-input is-dark flex-1 pixel-text"
             />
             <button
               type="submit"
               disabled={isLoading || !inputValue.trim() || !apiKey}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+              className="nes-btn is-primary pixel-text-sm"
             >
               {isLoading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
-                <PaperAirplaneIcon className="w-4 h-4" />
+                "SEND"
               )}
             </button>
           </form>
           
           {!apiKey && (
-            <div className="mt-2 text-sm text-amber-400">
-              Please enter API Key to start chatting
+            <div className="nes-text is-warning pixel-text-sm mt-2">
+              PLEASE ENTER API KEY TO START CHATTING
             </div>
           )}
           
-          <div className="mt-2 text-xs text-gray-400">
-            Powering COINTEXT, fudcan, Virtuals, Base, BSC, Algorand — and beyond.  Try asking: “What’s trending on Virtuals today?”
+          <div className="pixel-text-sm text-gray-400 mt-2">
+            POWERING AIBRK, FUDCAN, VIRTUALS, BASE, BSC, ALGORAND — AND BEYOND. TRY: &quot;WHAT&apos;S TRENDING ON VIRTUALS TODAY?&quot;
           </div>
         </div>
       </div>
