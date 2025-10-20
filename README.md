@@ -280,6 +280,92 @@ curl -X GET "http://localhost:3000/api/ai/ask?query=analyze%20ethereum%20market"
 
 ---
 
+## 🔄 **AI Workflow Architecture**
+
+### **📋 Ask API Interface**
+
+**Endpoint**: `GET /api/ai/ask`
+
+**Parameters**:
+- `query` (required): Natural language query string
+- `options` (optional): JSON string with additional options
+
+**Headers**:
+- `Authorization: Bearer <api-key>` (required)
+
+**Response**: Server-Sent Events (SSE) stream with real-time workflow updates
+
+### **⚡ Workflow Step Types**
+
+**1. Thinking Phase**
+- Query analysis and context building
+- Intent classification and confidence scoring
+- Workflow planning and step sequencing
+
+**2. RAG Retrieval**
+- Vector database search using ChromaDB
+- Knowledge base context extraction
+- Relevant document retrieval and ranking
+
+**3. API Calling**
+- External DeFi API integration (DeBank, Nansen)
+- Real-time market data fetching
+- Multi-source data aggregation
+
+**4. ACP Agent Job server buy**
+- Buy ACP Agent Job from Virtuals.io
+- Analyze Virtuals Market 
+
+**5. Answer Generation**
+- Context synthesis using GPT-4
+- Intelligent response formulation
+- Source attribution and accuracy validation
+
+### **📊 Real-time Streaming Events**
+
+The API streams the following events via Server-Sent Events:
+
+```javascript
+// Workflow planning
+event: workflow_plan
+data: {
+  "intent": "TOOL_ENHANCED",
+  "confidence": 0.95,
+  "reasoning": "User needs multi-protocol analysis",
+  "workflow": { "steps": [...] }
+}
+
+// Step execution
+event: step_start
+data: {
+  "type": "thinking|rag_retrieving|api_calling|answer_generating",
+  "name": "Human readable step name",
+  "stepId": "uuid"
+}
+
+event: step_complete
+data: {
+  "type": "thinking",
+  "stepId": "uuid",
+  "result": { "output": "...", "latencyMs": 150 }
+}
+
+// Final completion
+event: done
+data: {
+  "conversationId": "uuid",
+  "latencyMs": 2500,
+  "intent": "TOOL_ENHANCED",
+  "toolsUsed": ["debank.portfolio", "nansen.analytics"],
+  "ragUsed": true
+}
+```
+
+---
+
+## ACP call history
+- https://basescan.org/tx/0x719a2fc9026335021e488b86a4fd9f08b5990286404e5f0af980d52e17cb49d7
+
 ## 🔮 **Future Roadmap**
 
 ### **Phase 1: Enhanced AI Capabilities (Q1 2025)**
