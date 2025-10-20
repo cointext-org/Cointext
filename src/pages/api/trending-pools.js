@@ -102,11 +102,46 @@ export default async function handler(req, res) {
     }
 
     const chainsParam = req.query.chain?.toString().toLowerCase() ?? null;
+
+    console.log('chainsParam', chainsParam);
+    
+    // Chain key normalization mapping - handles multiple variants and case insensitive
+    const chainNormalization = {
+      // Base variants
+      'base': 'base',
+      'basecoin': 'base',
+      
+      // Solana variants
+      'sol': 'solana',
+      'solana': 'solana',
+      
+      // BSC/Binance variants
+      'bsc': 'bsc',
+      'bnb': 'bsc',
+      'binance': 'bsc',
+      'binance smart chain': 'bsc',
+      'smart chain': 'bsc',
+      
+      // Polygon variants
+      'polygon': 'polygon_pos',
+      'matic': 'polygon_pos',
+      'polygon pos': 'polygon_pos',
+      'polygon_pos': 'polygon_pos',
+      
+      // "ethereum"
+      'ethereum': 'eth',
+      'eth': 'eth',
+      'ethereum mainnet': 'eth',
+      'eth mainnet': 'eth',
+
+    };
+    
     const chainKeys = chainsParam
       ? chainsParam
           .split(',')
           .map((key) => key.trim())
           .filter(Boolean)
+          .map((key) => chainNormalization[key.toLowerCase()] || key) // Normalize chain keys
       : null;
 
     const limit = (() => {

@@ -121,6 +121,8 @@ export default async function handler(req, res) {
         client.knowledgeBases
       );
 
+      console.log('workflowPlan', workflowPlan)
+
       // Update conversation with intent and workflow
       try {
         await prisma.conversation.update({

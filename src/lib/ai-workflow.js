@@ -87,7 +87,9 @@ ${kbDescriptions}
 
 User Query: "${query}"
 
-Analyze this query and determine the appropriate workflow.`;
+- Analyze this query and determine the appropriate workflow.
+- if user api tools, you should build the actual parameters in step parameters.
+`;
 
       const response = await openai.chat.completions.create({
         model: 'gpt-4o',
@@ -100,7 +102,7 @@ Analyze this query and determine the appropriate workflow.`;
       });
 
       const result = JSON.parse(response.choices[0].message.content);
-      console.log('Intent analysis result:', result);
+      console.log('Intent analysis result:', result, response.choices[0]);
       
       // Validate and sanitize the result
       return this.validateWorkflowResult(result, availableTools);
@@ -524,6 +526,8 @@ console.log(answerPrompt);
    * Call a specific tool
    */
   async callTool(tool, parameters) {
+
+    console.log('tool', tool, parameters)
     if (tool.isExternal) {
       return await this.callExternalAPI(tool, parameters);
     }
@@ -533,7 +537,8 @@ console.log(answerPrompt);
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${tool.endpoint}`, {
         method: tool.method,
         headers: { 'Content-Type': 'application/json' },
-        body: tool.method !== 'GET' ? JSON.stringify(parameters) : undefined
+        body: tool.method !== 'GET' ? JSON.stringify(parameters) : undefined,
+        parameters: tool.method === 'GET' ? parameters : undefined
       });
 
       if (!response.ok) {
