@@ -1,6 +1,6 @@
 # Cointext — context for every coin.
 
-The knowledge base for every chain, every platform. Real-time intelligence with institutional-grade precision. Powering AIBRK, fudcan, Virtuals, Base, BSC, Algorand — and beyond. Try asking: “What’s trending on Virtuals today?”
+The AI base for crypt. Real-time intelligence with institutional-grade precision. Powering Ethereum, x402, Base, Virtuals, BSC, Algorand — and beyond. Try asking: “What’s trending on Ethereum today?”
 
 ## Start chatting with Cointext
 
